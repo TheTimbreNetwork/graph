@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TimbreProtocol
+    network: matic
+    source:
+      address: "0xdCE8bb4e037210b9D02330a9FC3E8136E4c441D5"
+      abi: TimbreProtocol
+      startBlock: 45366237
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddedReview
+        - AddedReviewableAddress
+      abis:
+        - name: TimbreProtocol
+          file: TimbreProtocol/abis/TimbreProtocol.json
+      eventHandlers:
+        - event: AddedReview(address,string,uint256,uint256)
+          handler: handleAddedReview
+        - event: AddedReviewableAddress(address)
+          handler: handleAddedReviewableAddress
+      file: TimbreProtocol/TimbreProtocol.wasm
