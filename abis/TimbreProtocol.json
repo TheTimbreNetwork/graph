@@ -1,7 +1,14 @@
 [
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "reviewer",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "address",
@@ -98,6 +105,27 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "i_owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "existingReviewableAddress",
+        "type": "address"
+      },
+      { "internalType": "address", "name": "reviewer", "type": "address" }
+    ],
+    "name": "payForViewerAccess",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -152,6 +180,13 @@
       { "internalType": "bool", "name": "hasAccess", "type": "bool" }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

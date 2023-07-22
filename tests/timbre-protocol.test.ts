@@ -17,6 +17,9 @@ import { createAddedReviewEvent } from "./timbre-protocol-utils"
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
+    let reviewer = Address.fromString(
+      "0x0000000000000000000000000000000000000001"
+    )
     let existingReviewableAddress = Address.fromString(
       "0x0000000000000000000000000000000000000001"
     )
@@ -24,6 +27,7 @@ describe("Describe entity assertions", () => {
     let currentBlockTime = BigInt.fromI32(234)
     let _priceToAccessReview = BigInt.fromI32(234)
     let newAddedReviewEvent = createAddedReviewEvent(
+      reviewer,
       existingReviewableAddress,
       _reviewDecentralizedStorageURL,
       currentBlockTime,
@@ -43,6 +47,12 @@ describe("Describe entity assertions", () => {
     assert.entityCount("AddedReview", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
+    assert.fieldEquals(
+      "AddedReview",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "reviewer",
+      "0x0000000000000000000000000000000000000001"
+    )
     assert.fieldEquals(
       "AddedReview",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",

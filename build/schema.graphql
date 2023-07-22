@@ -1,5 +1,6 @@
 type AddedReview @entity(immutable: true) {
   id: Bytes!
+  reviewer: Bytes! # address
   existingReviewableAddress: Bytes! # address
   _reviewDecentralizedStorageURL: String! # string
   currentBlockTime: BigInt! # uint256

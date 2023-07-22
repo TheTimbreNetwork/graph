@@ -23,20 +23,24 @@ export class AddedReview__Params {
     this._event = event;
   }
 
-  get existingReviewableAddress(): Address {
+  get reviewer(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
+  get existingReviewableAddress(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
   get _reviewDecentralizedStorageURL(): string {
-    return this._event.parameters[1].value.toString();
+    return this._event.parameters[2].value.toString();
   }
 
   get currentBlockTime(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+    return this._event.parameters[3].value.toBigInt();
   }
 
   get _priceToAccessReview(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+    return this._event.parameters[4].value.toBigInt();
   }
 }
 
@@ -135,6 +139,21 @@ export class TimbreProtocol extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  i_owner(): Address {
+    let result = super.call("i_owner", "i_owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_i_owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("i_owner", "i_owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   reviewableAddressExists(reviewableAddress: Address): boolean {
@@ -251,6 +270,32 @@ export class TimbreProtocol extends ethereum.SmartContract {
   }
 }
 
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
+  }
+
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
+  }
+}
+
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
 export class AddReviewCall extends ethereum.Call {
   get inputs(): AddReviewCall__Inputs {
     return new AddReviewCall__Inputs(this);
@@ -315,6 +360,66 @@ export class AddReviewableAddressCall__Outputs {
   _call: AddReviewableAddressCall;
 
   constructor(call: AddReviewableAddressCall) {
+    this._call = call;
+  }
+}
+
+export class PayForViewerAccessCall extends ethereum.Call {
+  get inputs(): PayForViewerAccessCall__Inputs {
+    return new PayForViewerAccessCall__Inputs(this);
+  }
+
+  get outputs(): PayForViewerAccessCall__Outputs {
+    return new PayForViewerAccessCall__Outputs(this);
+  }
+}
+
+export class PayForViewerAccessCall__Inputs {
+  _call: PayForViewerAccessCall;
+
+  constructor(call: PayForViewerAccessCall) {
+    this._call = call;
+  }
+
+  get existingReviewableAddress(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get reviewer(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class PayForViewerAccessCall__Outputs {
+  _call: PayForViewerAccessCall;
+
+  constructor(call: PayForViewerAccessCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawCall extends ethereum.Call {
+  get inputs(): WithdrawCall__Inputs {
+    return new WithdrawCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawCall__Outputs {
+    return new WithdrawCall__Outputs(this);
+  }
+}
+
+export class WithdrawCall__Inputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawCall__Outputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
     this._call = call;
   }
 }

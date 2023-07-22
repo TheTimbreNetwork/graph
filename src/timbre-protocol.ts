@@ -8,6 +8,7 @@ export function handleAddedReview(event: AddedReviewEvent): void {
   let entity = new AddedReview(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
+  entity.reviewer = event.params.reviewer
   entity.existingReviewableAddress = event.params.existingReviewableAddress
   entity._reviewDecentralizedStorageURL =
     event.params._reviewDecentralizedStorageURL

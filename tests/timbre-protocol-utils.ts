@@ -6,6 +6,7 @@ import {
 } from "../generated/TimbreProtocol/TimbreProtocol"
 
 export function createAddedReviewEvent(
+  reviewer: Address,
   existingReviewableAddress: Address,
   _reviewDecentralizedStorageURL: string,
   currentBlockTime: BigInt,
@@ -15,6 +16,9 @@ export function createAddedReviewEvent(
 
   addedReviewEvent.parameters = new Array()
 
+  addedReviewEvent.parameters.push(
+    new ethereum.EventParam("reviewer", ethereum.Value.fromAddress(reviewer))
+  )
   addedReviewEvent.parameters.push(
     new ethereum.EventParam(
       "existingReviewableAddress",

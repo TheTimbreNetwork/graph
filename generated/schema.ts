@@ -54,6 +54,19 @@ export class AddedReview extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
+  get reviewer(): Bytes {
+    let value = this.get("reviewer");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set reviewer(value: Bytes) {
+    this.set("reviewer", Value.fromBytes(value));
+  }
+
   get existingReviewableAddress(): Bytes {
     let value = this.get("existingReviewableAddress");
     if (!value || value.kind == ValueKind.NULL) {
